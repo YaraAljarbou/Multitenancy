@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: false
+tenants:
+  datasources:
+    tenant_1:
+      url: jdbc:postgresql://localhost:5432/tenant1
+      username: postgres
+      password: root
+      driverClassName: org.postgresql.Driver
+    tenant_2:
+      url: jdbc:postgresql://localhost:5432/tenant2
+      username: postgres
+      password: root
+      driverClassName: org.postgresql.Driver
