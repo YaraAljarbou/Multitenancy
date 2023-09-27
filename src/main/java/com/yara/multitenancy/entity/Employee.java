@@ -1,6 +1,7 @@
 package com.yara.multitenancy.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.TenantId;
 
 @Entity
 @Table(name = "employee")
