@@ -22,7 +22,7 @@ public class TenantFilter implements Filter {
         // Getting Tenant from JWT
         // String tenant = AuthenticationService.getTenant((HttpServletRequest) request);
 
-        TenantContext.setCurrentTenant(tenant);
+        TenantContext.setCurrentTenant(tenant); // Main Thread,  Request -> end of transaction
 
         try {
             chain.doFilter(request, response);

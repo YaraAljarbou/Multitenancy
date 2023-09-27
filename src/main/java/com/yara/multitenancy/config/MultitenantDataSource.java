@@ -17,7 +17,7 @@ public class MultitenantDataSource {
     public Map<Object, Object> getDatasources() {
         return datasources;
     }
-
+                                 //tenant_? , {url:adsfasfa,name:...k;fdjlsj, }
     public void setDatasources(Map<String, Map<String, String>> datasources) {
         datasources
                 .forEach((key, value) -> this.datasources.put(key, convert(value)));
