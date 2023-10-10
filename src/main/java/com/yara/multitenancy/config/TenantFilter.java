@@ -5,12 +5,13 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import java.io.IOException;
 
 @Component
 @Order(1)
-public class TenantFilter implements Filter {
+public class TenantFilter implements Filter, AsyncHandlerInterceptor {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {

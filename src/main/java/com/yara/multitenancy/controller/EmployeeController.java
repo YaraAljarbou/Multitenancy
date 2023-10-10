@@ -7,10 +7,10 @@ import com.yara.multitenancy.entity.Employee;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -32,15 +32,23 @@ public class EmployeeController {
         employeeRepository.save(newEmployee);
         return ResponseEntity.ok(newEmployee);
     }
-
     @GetMapping(path = "/employee")
     public CompletableFuture<List<Employee>> getEmployees(HttpServletRequest req)
     {
-    return CompletableFuture.supplyAsync(() -> {
         String tenant = req.getHeader("X-TenantID");
-        TenantContext.setCurrentTenant(tenant);
-        return employeeRepository.findAll();
-          });
+        System.out.println("tenant --> " + tenant);
+        List<Employee> employees = employeeRepository.findAll();
+        System.out.println(employees.size());
+        return CompletableFuture.completedFuture(employees);
+
+//    return CompletableFuture.supplyAsync(() -> {
+//        String tenant = req.getHeader("X-TenantID");
+//        System.out.println("tenant --> " +tenant);
+//        TenantContext.setCurrentTenant(tenant);
+//        List<Employee> employees = employeeRepository.findAll();
+//        System.out.println(employees.size());
+//        return employees;
+//          });
     }
 
 

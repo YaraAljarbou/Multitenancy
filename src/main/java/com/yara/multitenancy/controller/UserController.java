@@ -4,6 +4,8 @@ import com.yara.multitenancy.Service.JwtService;
 import com.yara.multitenancy.Service.UserInfoService;
 import com.yara.multitenancy.config.TenantContext;
 import com.yara.multitenancy.entity.AuthRequest;
+import com.yara.multitenancy.entity.Employee;
+import com.yara.multitenancy.entity.MutableHttpServletRequest;
 import com.yara.multitenancy.entity.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/auth")
@@ -45,10 +50,11 @@ public class UserController {
 
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<?> userProfile(HttpServletRequest req) {
+    public CompletableFuture<List<Employee>> userProfile(HttpServletRequest req) {
+        MutableHttpServletRequest req1 = new MutableHttpServletRequest(req);
         String tenant = jwtService.extractUsername(req.getHeader("authorization").substring(7));
-        TenantContext.setCurrentTenant(tenant);
-        return employeeController.createEmployee();
+        if(tenant != null){req1.putHeader("X-TenantID",tenant);}
+        return employeeController.getEmployees(req1);
     }
 
     @GetMapping("/admin/adminProfile")

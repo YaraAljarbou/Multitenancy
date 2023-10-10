@@ -5,20 +5,48 @@ spring:
     allow-circular-references: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
       format_sql: true
+#  datasource:
+#    url: jdbc:singlestore://localhost:3306/users
+#    username: root
+#    password: 12341234
+#    driver-class-name: com.singlestore.jdbc.Driver
+#  flyway:
+#    enabled: false
+#tenants:
+#  datasources:
+#    users:
+#      url: jdbc:singlestore://localhost:3306/users
+#      username: root
+#      password: 12341234
+#      driver-class-name: com.singlestore.jdbc.Driver
+#    tenant_1:
+#      url: jdbc:singlestore://localhost:3306/tenant_1
+#      username: root
+#      password: 12341234
+#      driver-class-name: com.singlestore.jdbc.Driver
+#    tenant_2:
+#      url: jdbc:singlestore://localhost:3306/tenant_2
+#      username: root
+#      password: 12341234
+#      driver-class-name: com.singlestore.jdbc.Driver
   datasource:
-    url: jdbc:postgresql://localhost:5432/tenant1
+    url: jdbc:postgresql://localhost:5432/users
     username: postgres
     password: root
   flyway:
     enabled: false
 tenants:
   datasources:
+    users:
+      url: jdbc:postgresql://localhost:5432/users
+      username: postgres
+      password: root
     tenant_1:
       url: jdbc:postgresql://localhost:5432/tenant1
       username: postgres
