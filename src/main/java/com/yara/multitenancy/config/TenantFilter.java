@@ -17,13 +17,14 @@ public class TenantFilter implements Filter, AsyncHandlerInterceptor {
                          FilterChain chain) throws IOException, ServletException {
 
         // Getting Tenant from Header
-        HttpServletRequest req = (HttpServletRequest) request;
-        String tenant = req.getHeader("X-TenantID");
+        if(TenantContext.getCurrentTenant() == null) {
+            HttpServletRequest req = (HttpServletRequest) request;
+            String tenant = req.getHeader("X-TenantID");
+            TenantContext.setCurrentTenant(tenant);
+        }
 
         // Getting Tenant from JWT
-        // String tenant = AuthenticationService.getTenant((HttpServletRequest) request);
-
-        TenantContext.setCurrentTenant(tenant); // Main Thread,  Request -> end of transaction
+//         String tenant = AuthenticationService.getTenant((HttpServletRequest) request);
 
         try {
             chain.doFilter(request, response);

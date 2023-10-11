@@ -23,7 +23,6 @@ private final EmployeeRepository employeeRepository;
     return CompletableFuture.supplyAsync(() -> {
         log.info("getEmployees starts");
         List<Employee> employees = employeeRepository.findAll();
-        System.out.println(employees.size());
         log.info("employeeNameData completed");
         return employees;
           });

@@ -44,17 +44,13 @@ public class UserController {
 
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
-        System.out.println("we are in");
         return service.addUser(userInfo);
     }
 
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public CompletableFuture<List<Employee>> userProfile(HttpServletRequest req) {
-        MutableHttpServletRequest req1 = new MutableHttpServletRequest(req);
-        String tenant = jwtService.extractUsername(req.getHeader("authorization").substring(7));
-        if(tenant != null){req1.putHeader("X-TenantID",tenant);}
-        return employeeController.getEmployees(req1);
+        return employeeController.getEmployees(req);
     }
 
     @GetMapping("/admin/adminProfile")
