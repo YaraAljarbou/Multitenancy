@@ -18,7 +18,7 @@ public class MultitenantConfiguration {
     @Bean
     public DataSource dataSource() {
         TenantRoutingDataSource customDataSource = new TenantRoutingDataSource();
-        customDataSource.setDefaultTargetDataSource(multitenantDataSource.getDatasources().get("tenant_1"));
+        customDataSource.setDefaultTargetDataSource(multitenantDataSource.getDatasources().get("users"));
         customDataSource.setTargetDataSources(
                 multitenantDataSource.getDatasources());
         return customDataSource;

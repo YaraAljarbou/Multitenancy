@@ -26,7 +26,7 @@ public class MultitenantDataSource {
     public DataSource convert(Map<String, String> source) {
         return DataSourceBuilder.create()
                 .url(source.get("url"))
-                .driverClassName(source.get("driverClassName"))
+                .driverClassName(source.get("driver-class-name"))
                 .username(source.get("username"))
                 .password(source.get("password"))
                 .build();

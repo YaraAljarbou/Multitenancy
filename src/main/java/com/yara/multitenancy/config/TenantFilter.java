@@ -5,24 +5,26 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import java.io.IOException;
 
 @Component
 @Order(1)
-public class TenantFilter implements Filter {
+public class TenantFilter implements Filter, AsyncHandlerInterceptor {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
 
         // Getting Tenant from Header
-        HttpServletRequest req = (HttpServletRequest) request;
-        String tenant = req.getHeader("X-TenantID");
+        if(TenantContext.getCurrentTenant() == null) {
+            HttpServletRequest req = (HttpServletRequest) request;
+            String tenant = req.getHeader("X-TenantID");
+            TenantContext.setCurrentTenant(tenant);
+        }
 
         // Getting Tenant from JWT
-        // String tenant = AuthenticationService.getTenant((HttpServletRequest) request);
-
-        TenantContext.setCurrentTenant(tenant); // Main Thread,  Request -> end of transaction
+//         String tenant = AuthenticationService.getTenant((HttpServletRequest) request);
 
         try {
             chain.doFilter(request, response);
