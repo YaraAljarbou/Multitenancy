@@ -58,7 +58,7 @@ public class EmployeeController {
         // Perform asynchronous getAll operation
         try {
             // Simulate a long-running task
-            Thread.sleep(3000);
+//            Thread.sleep(3000);
 
             List<Employee> employees = employeeRepository.findAll();
             future.complete(employees);
