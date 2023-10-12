@@ -49,8 +49,8 @@ public class UserController {
 
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public CompletableFuture<List<Employee>> userProfile(HttpServletRequest req) {
-        return employeeController.getEmployees(req);
+    public CompletableFuture<List<Employee>> userProfile() {
+        return employeeController.getEmployees();
     }
 
     @GetMapping("/admin/adminProfile")

@@ -36,7 +36,6 @@ public class ContextAwareRunnable implements Runnable {
 
         try {
             TenantContext.setCurrentTenant(tenant);
-
             task.run();
         } finally {
             RequestContextHolder.resetRequestAttributes();
